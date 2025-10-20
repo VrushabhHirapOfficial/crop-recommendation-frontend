@@ -2,7 +2,7 @@
 
 ## ✅ What Has Been Upgraded
 
-Your Indra Dhanu crop recommendation app has been completely upgraded with
+Your IndraDhanu crop recommendation app has been completely upgraded with
 
 ### 🌐 **1. Industry-Standard i18next Translation System**
 - ✅ Replaced broken LanguageContext with **react-i18next**
