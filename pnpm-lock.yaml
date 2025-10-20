@@ -1271,8 +1271,8 @@ packages:
   axios@1.12.2:
     resolution: {integrity: sha512-vMJzPewAlRyOgxV2dU0Cuz2O8zzzx9VYtbJOaBgXFeLc4IV/Eg50n4LowmehOOR61S8ZMpc2K5Sa7g6A4jfkUw==}
 
-  baseline-browser-mapping@2.8.17:
-    resolution: {integrity: sha512-j5zJcx6golJYTG6c05LUZ3Z8Gi+M62zRT/ycz4Xq4iCOdpcxwg7ngEYD4KA0eWZC7U17qh/Smq8bYbACJ0ipBA==}
+  baseline-browser-mapping@2.8.18:
+    resolution: {integrity: sha512-UYmTpOBwgPScZpS4A+YbapwWuBwasxvO/2IOHArSsAhL/+ZdmATBXTex3t+l2hXwLVYK382ibr/nKoY9GKe86w==}
     hasBin: true
 
   browserslist@4.26.3:
@@ -2951,11 +2951,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  baseline-browser-mapping@2.8.17: {}
+  baseline-browser-mapping@2.8.18: {}
 
   browserslist@4.26.3:
     dependencies:
-      baseline-browser-mapping: 2.8.17
+      baseline-browser-mapping: 2.8.18
       caniuse-lite: 1.0.30001751
       electron-to-chromium: 1.5.237
       node-releases: 2.0.25
