@@ -69,29 +69,29 @@ export default function Home() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col min-h-screen relative z-10">
         <div className="sticky top-0 z-50 glass-dark backdrop-blur-3xl border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4">
-            <TabsList className="w-full justify-start rounded-none bg-transparent p-0 h-auto gap-3 py-4">
+          <div className="max-w-7xl mx-auto px-2 sm:px-4">
+            <TabsList className="w-full justify-start rounded-none bg-transparent p-0 h-auto gap-1.5 sm:gap-3 py-2 sm:py-4 overflow-x-auto flex-nowrap">
               <TabsTrigger
                 value="landing"
-                className="glass-tab data-[state=active]:glass-tab-active px-6 py-2.5 rounded-2xl font-semibold transition-all duration-300 btn-animate"
+                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
               >
                 {t("home")}
               </TabsTrigger>
               <TabsTrigger
                 value="learn-more"
-                className="glass-tab data-[state=active]:glass-tab-active px-6 py-2.5 rounded-2xl font-semibold transition-all duration-300 btn-animate"
+                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
               >
                 {t("learn_more")}
               </TabsTrigger>
               <TabsTrigger
                 value="recommendation"
-                className="glass-tab data-[state=active]:glass-tab-active px-6 py-2.5 rounded-2xl font-semibold transition-all duration-300 btn-animate"
+                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
               >
                 {t("get_recommendation")}
               </TabsTrigger>
               <TabsTrigger
                 value="profile"
-                className="glass-tab data-[state=active]:glass-tab-active px-6 py-2.5 rounded-2xl font-semibold transition-all duration-300 btn-animate"
+                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
               >
                 {t("profile")}
               </TabsTrigger>
