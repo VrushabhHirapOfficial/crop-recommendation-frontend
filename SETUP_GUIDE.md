@@ -55,7 +55,6 @@ pnpm dev
 ```
 
 Visit: [http://localhost:3000](http://localhost:3000)
-this might change every time when you run
 ---
 
 ## 🎮 How to Use
