@@ -1,11 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Brain, Database, Zap, TrendingUp, Leaf, BarChart3, CheckCircle2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
 export default function LearnMorePage() {
+  const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -28,11 +30,11 @@ export default function LearnMorePage() {
             }`}
           >
             <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 text-balance leading-tight">
-              How Our <span className="text-accent">AI Model</span> Works
+              {t("how_ai_works")}
             </h1>
 
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-balance max-w-2xl mx-auto leading-relaxed">
-              Discover the technology behind Indra Dhanu's intelligent crop recommendations
+              {t("ai_model_description")}
             </p>
           </div>
         </div>
@@ -42,9 +44,9 @@ export default function LearnMorePage() {
       <section className="py-20 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">Model Architecture</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">{t("model_architecture")}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our deep learning model combines multiple neural network layers to process agricultural data
+              {t("model_architecture_desc")}
             </p>
           </div>
 
@@ -53,10 +55,9 @@ export default function LearnMorePage() {
               <div className="w-14 h-14 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
                 <Database className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">Input Layer</h3>
+              <h3 className="text-xl font-bold text-foreground mb-3">{t("input_layer")}</h3>
               <p className="text-muted-foreground">
-                Processes 7 critical agricultural parameters: Nitrogen, Phosphorus, Potassium, Temperature, Humidity,
-                pH, and Rainfall
+                {t("input_layer_desc")}
               </p>
             </Card>
 
@@ -64,10 +65,9 @@ export default function LearnMorePage() {
               <div className="w-14 h-14 bg-secondary/20 rounded-lg flex items-center justify-center mb-4">
                 <Brain className="w-7 h-7 text-secondary" />
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">Hidden Layers</h3>
+              <h3 className="text-xl font-bold text-foreground mb-3">{t("hidden_layers")}</h3>
               <p className="text-muted-foreground">
-                Multiple dense layers with ReLU activation extract complex patterns and relationships from the input
-                data
+                {t("hidden_layers_desc")}
               </p>
             </Card>
 
@@ -75,9 +75,9 @@ export default function LearnMorePage() {
               <div className="w-14 h-14 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
                 <Zap className="w-7 h-7 text-accent" />
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">Output Layer</h3>
+              <h3 className="text-xl font-bold text-foreground mb-3">{t("output_layer")}</h3>
               <p className="text-muted-foreground">
-                Softmax activation generates probability scores for 50+ crop varieties, ranking them by suitability
+                {t("output_layer_desc")}
               </p>
             </Card>
           </div>
@@ -88,9 +88,9 @@ export default function LearnMorePage() {
       <section className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">Training & Validation</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">{t("training_validation")}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our model was trained on extensive agricultural datasets from multiple regions and seasons
+              {t("training_desc")}
             </p>
           </div>
 
@@ -101,9 +101,9 @@ export default function LearnMorePage() {
                   <CheckCircle2 className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground mb-2">100,000+ Training Records</h4>
+                  <h4 className="font-bold text-foreground mb-2">{t("training_records")}</h4>
                   <p className="text-muted-foreground">
-                    Trained on comprehensive agricultural data spanning multiple years and regions
+                    {t("training_records_desc")}
                   </p>
                 </div>
               </div>
@@ -113,9 +113,9 @@ export default function LearnMorePage() {
                   <CheckCircle2 className="w-6 h-6 text-secondary" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground mb-2">Cross-Validation</h4>
+                  <h4 className="font-bold text-foreground mb-2">{t("cross_validation")}</h4>
                   <p className="text-muted-foreground">
-                    K-fold cross-validation ensures robust performance across different data distributions
+                    {t("cross_validation_desc")}
                   </p>
                 </div>
               </div>
@@ -125,9 +125,9 @@ export default function LearnMorePage() {
                   <CheckCircle2 className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground mb-2">Hyperparameter Tuning</h4>
+                  <h4 className="font-bold text-foreground mb-2">{t("hyperparameter_tuning")}</h4>
                   <p className="text-muted-foreground">
-                    Optimized learning rates, batch sizes, and regularization for maximum accuracy
+                    {t("hyperparameter_desc")}
                   </p>
                 </div>
               </div>
@@ -137,20 +137,20 @@ export default function LearnMorePage() {
                   <CheckCircle2 className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground mb-2">Real-World Testing</h4>
+                  <h4 className="font-bold text-foreground mb-2">{t("real_world_testing")}</h4>
                   <p className="text-muted-foreground">
-                    Validated against actual farmer feedback and crop outcomes from diverse farms
+                    {t("real_world_testing_desc")}
                   </p>
                 </div>
               </div>
             </div>
 
             <Card className="bg-card border border-border p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold text-foreground mb-8">Performance Metrics</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-8">{t("performance_metrics")}</h3>
               <div className="space-y-6">
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-foreground">Accuracy</span>
+                    <span className="font-semibold text-foreground">{t("accuracy")}</span>
                     <span className="text-accent font-bold">98%</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
@@ -160,7 +160,7 @@ export default function LearnMorePage() {
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-foreground">Precision</span>
+                    <span className="font-semibold text-foreground">{t("precision")}</span>
                     <span className="text-accent font-bold">96%</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
@@ -170,7 +170,7 @@ export default function LearnMorePage() {
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-foreground">Recall</span>
+                    <span className="font-semibold text-foreground">{t("recall")}</span>
                     <span className="text-accent font-bold">94%</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
@@ -180,7 +180,7 @@ export default function LearnMorePage() {
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-foreground">F1-Score</span>
+                    <span className="font-semibold text-foreground">{t("f1_score")}</span>
                     <span className="text-accent font-bold">95%</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
@@ -197,9 +197,9 @@ export default function LearnMorePage() {
       <section className="py-20 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">Advanced Features</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">{t("advanced_features")}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our model incorporates cutting-edge techniques for superior crop recommendations
+              {t("advanced_features_desc")}
             </p>
           </div>
 
@@ -210,9 +210,9 @@ export default function LearnMorePage() {
                   <TrendingUp className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Market Price Integration</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{t("market_price_integration")}</h3>
                   <p className="text-muted-foreground">
-                    Considers current market prices to recommend crops with maximum profit potential
+                    {t("market_price_desc")}
                   </p>
                 </div>
               </div>
@@ -224,9 +224,9 @@ export default function LearnMorePage() {
                   <Leaf className="w-6 h-6 text-secondary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Seasonal Adaptation</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{t("seasonal_adaptation")}</h3>
                   <p className="text-muted-foreground">
-                    Automatically adjusts recommendations based on current season and weather patterns
+                    {t("seasonal_adaptation_desc")}
                   </p>
                 </div>
               </div>
@@ -238,9 +238,9 @@ export default function LearnMorePage() {
                   <BarChart3 className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Yield Prediction</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{t("yield_prediction")}</h3>
                   <p className="text-muted-foreground">
-                    Estimates expected yield for each recommended crop based on your specific conditions
+                    {t("yield_prediction_desc")}
                   </p>
                 </div>
               </div>
@@ -252,9 +252,9 @@ export default function LearnMorePage() {
                   <Zap className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Real-Time Updates</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{t("real_time_updates")}</h3>
                   <p className="text-muted-foreground">
-                    Model continuously learns from new data to improve recommendations over time
+                    {t("real_time_updates_desc")}
                   </p>
                 </div>
               </div>
@@ -266,9 +266,9 @@ export default function LearnMorePage() {
       {/* CTA Section */}
       <section className="py-20 px-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">Ready to Get Started?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">{t("ready_to_get_started")}</h2>
           <p className="text-lg md:text-xl mb-8 text-primary-foreground/90 text-balance">
-            Use our AI model to get personalized crop recommendations for your farm today.
+            {t("get_started_desc")}
           </p>
           <Button
             size="lg"
@@ -278,7 +278,7 @@ export default function LearnMorePage() {
               tabs?.click()
             }}
           >
-            Get Recommendation <ArrowRight className="w-5 h-5 ml-2" />
+            {t("get_recommendation")} <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>
       </section>
@@ -287,10 +287,10 @@ export default function LearnMorePage() {
       <footer className="bg-primary text-primary-foreground py-8 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-sm">
-            <span className="font-bold">Indra Dhanu Smart Crop Recommendation System</span>
+            <span className="font-bold">{t("app_title_full")}</span>
           </p>
           <p className="text-xs text-primary-foreground/70 mt-2">
-            Hackathon 2025 | Empowering Farmers with Data-Driven Decisions
+            {t("hackathon_tagline")}
           </p>
         </div>
       </footer>

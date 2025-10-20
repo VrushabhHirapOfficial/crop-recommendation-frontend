@@ -1,11 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { ArrowRight, Leaf, TrendingUp, Zap, BarChart3, Brain, Sprout } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
 export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) => void }) {
+  const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -29,16 +31,15 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
           >
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-accent/10 rounded-full border border-accent/20">
               <Sprout className="w-4 h-4 text-accent" />
-              <span className="text-sm font-semibold text-accent">AI-Powered Agriculture</span>
+              <span className="text-sm font-semibold text-accent">{t("ai_powered_agriculture")}</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 text-balance leading-tight">
-              Grow Smarter with <span className="text-accent">Indra Dhanu</span>
+              {t("grow_smarter_with")} <span className="text-accent">Indra Dhanu</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 text-balance max-w-2xl mx-auto leading-relaxed">
-              Our advanced ML model analyzes your soil and climate conditions to recommend the perfect crops for maximum
-              yield and profitability.
+              {t("hero_description")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -47,7 +48,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-8 py-6 rounded-lg btn-animate"
                 onClick={() => onNavigate("recommendation")}
               >
-                Get Started <ArrowRight className="w-5 h-5 ml-2" />
+                {t("get_started")} <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
                 size="lg"
@@ -55,7 +56,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
                 className="font-bold text-lg px-8 py-6 rounded-lg border-2 bg-transparent btn-animate"
                 onClick={() => onNavigate("learn-more")}
               >
-                Learn More
+                {t("learn_more")}
               </Button>
             </div>
 
@@ -63,15 +64,15 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
             <div className="grid grid-cols-3 gap-4 md:gap-8 mt-16">
               <div className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-accent mb-2">98%</div>
-                <p className="text-sm md:text-base text-muted-foreground">Accuracy Rate</p>
+                <p className="text-sm md:text-base text-muted-foreground">{t("accuracy_rate")}</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-accent mb-2">50K+</div>
-                <p className="text-sm md:text-base text-muted-foreground">Farmers Helped</p>
+                <p className="text-sm md:text-base text-muted-foreground">{t("farmers_helped")}</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-accent mb-2">₹2.5Cr</div>
-                <p className="text-sm md:text-base text-muted-foreground">Revenue Generated</p>
+                <p className="text-sm md:text-base text-muted-foreground">{t("revenue_generated")}</p>
               </div>
             </div>
           </div>
@@ -82,9 +83,9 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
       <section className="py-20 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">Our Trained ML Model</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">{t("our_trained_ml_model")}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Built with cutting-edge machine learning technology and trained on years of agricultural data
+              {t("ml_model_description")}
             </p>
           </div>
 
@@ -95,10 +96,9 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
                   <Brain className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Advanced Neural Networks</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{t("advanced_neural_networks")}</h3>
                   <p className="text-muted-foreground">
-                    Our model uses deep learning algorithms trained on 100,000+ crop records to identify patterns and
-                    predict optimal crops with exceptional accuracy.
+                    {t("neural_network_description")}
                   </p>
                 </div>
               </div>
@@ -110,10 +110,9 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
                   <BarChart3 className="w-6 h-6 text-secondary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Data-Driven Insights</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{t("data_driven_insights")}</h3>
                   <p className="text-muted-foreground">
-                    Analyzes 7 critical parameters including NPK levels, temperature, humidity, pH, and rainfall to
-                    provide comprehensive recommendations.
+                    {t("data_insights_description")}
                   </p>
                 </div>
               </div>
@@ -123,25 +122,25 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 p-6 rounded-xl">
               <Leaf className="w-8 h-8 text-primary mb-4" />
-              <h4 className="font-bold text-foreground mb-2">50+ Crops</h4>
+              <h4 className="font-bold text-foreground mb-2">{t("crops_count")}</h4>
               <p className="text-sm text-muted-foreground">
-                Trained to recognize and recommend from 50+ different crop varieties
+                {t("crops_description")}
               </p>
             </Card>
 
             <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 border border-secondary/20 p-6 rounded-xl">
               <TrendingUp className="w-8 h-8 text-secondary mb-4" />
-              <h4 className="font-bold text-foreground mb-2">Real-Time Analysis</h4>
+              <h4 className="font-bold text-foreground mb-2">{t("real_time_analysis")}</h4>
               <p className="text-sm text-muted-foreground">
-                Instant predictions based on your current soil and weather conditions
+                {t("real_time_description")}
               </p>
             </Card>
 
             <Card className="bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/20 p-6 rounded-xl">
               <Zap className="w-8 h-8 text-accent mb-4" />
-              <h4 className="font-bold text-foreground mb-2">Profit Optimization</h4>
+              <h4 className="font-bold text-foreground mb-2">{t("profit_optimization")}</h4>
               <p className="text-sm text-muted-foreground">
-                Maximizes your yield and revenue with market-aware recommendations
+                {t("profit_description")}
               </p>
             </Card>
           </div>
@@ -152,9 +151,9 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
       <section className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">Proven Performance</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">{t("proven_performance")}</h2>
             <p className="text-lg text-muted-foreground">
-              Our model has been rigorously tested and validated across diverse agricultural regions
+              {t("performance_description")}
             </p>
           </div>
 
@@ -162,7 +161,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
             <div className="space-y-6">
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-foreground">Prediction Accuracy</span>
+                  <span className="font-semibold text-foreground">{t("prediction_accuracy")}</span>
                   <span className="text-accent font-bold">98%</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-3">
@@ -172,7 +171,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-foreground">Yield Improvement</span>
+                  <span className="font-semibold text-foreground">{t("yield_improvement")}</span>
                   <span className="text-accent font-bold">35%</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-3">
@@ -182,7 +181,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-foreground">Revenue Increase</span>
+                  <span className="font-semibold text-foreground">{t("revenue_increase")}</span>
                   <span className="text-accent font-bold">42%</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-3">
@@ -192,7 +191,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-foreground">Farmer Satisfaction</span>
+                  <span className="font-semibold text-foreground">{t("farmer_satisfaction")}</span>
                   <span className="text-accent font-bold">96%</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-3">
@@ -202,15 +201,14 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
             </div>
 
             <Card className="bg-card border border-border p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold text-foreground mb-6">Why Choose Indra Dhanu?</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-6">{t("why_choose_indra_dhanu")}</h3>
               <ul className="space-y-4">
                 <li className="flex gap-3">
                   <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 mt-1">
                     <div className="w-2 h-2 rounded-full bg-accent"></div>
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Scientifically Validated</strong> - Tested across multiple
-                    regions and seasons
+                    <strong className="text-foreground">{t("scientifically_validated")}</strong> - {t("scientifically_validated_desc")}
                   </span>
                 </li>
                 <li className="flex gap-3">
@@ -218,7 +216,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
                     <div className="w-2 h-2 rounded-full bg-accent"></div>
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Easy to Use</strong> - Simple interface for all farmers
+                    <strong className="text-foreground">{t("easy_to_use")}</strong> - {t("easy_to_use_desc")}
                   </span>
                 </li>
                 <li className="flex gap-3">
@@ -226,7 +224,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
                     <div className="w-2 h-2 rounded-full bg-accent"></div>
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Real-Time Support</strong> - Get instant recommendations anytime
+                    <strong className="text-foreground">{t("real_time_support")}</strong> - {t("real_time_support_desc")}
                   </span>
                 </li>
                 <li className="flex gap-3">
@@ -234,7 +232,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
                     <div className="w-2 h-2 rounded-full bg-accent"></div>
                   </div>
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">Profit Focused</strong> - Maximizes your earnings
+                    <strong className="text-foreground">{t("profit_focused")}</strong> - {t("profit_focused_desc")}
                   </span>
                 </li>
               </ul>
@@ -246,16 +244,16 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">Ready to Transform Your Farming?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">{t("ready_to_transform")}</h2>
           <p className="text-lg md:text-xl mb-8 text-primary-foreground/90 text-balance">
-            Get personalized crop recommendations based on your farm conditions in seconds.
+            {t("transform_description")}
           </p>
           <Button
             size="lg"
             className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-8 py-6 rounded-lg btn-animate"
             onClick={() => onNavigate("recommendation")}
           >
-            Get Your Recommendation Now <ArrowRight className="w-5 h-5 ml-2" />
+            {t("get_recommendation_now")} <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>
       </section>
@@ -264,10 +262,10 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
       <footer className="bg-primary text-primary-foreground py-8 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-sm">
-            <span className="font-bold">Indra Dhanu Smart Crop Recommendation System</span>
+            <span className="font-bold">{t("app_title_full")}</span>
           </p>
           <p className="text-xs text-primary-foreground/70 mt-2">
-            Hackathon 2025 | Empowering Farmers with Data-Driven Decisions
+            {t("hackathon_tagline")}
           </p>
         </div>
       </footer>
