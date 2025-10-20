@@ -2,7 +2,7 @@
 
 ## ✅ What Has Been Upgraded
 
-Your Indra Dhanu crop recommendation app has been completely upgraded with:
+Your Indra Dhanu crop recommendation app has been completely upgraded with
 
 ### 🌐 **1. Industry-Standard i18next Translation System**
 - ✅ Replaced broken LanguageContext with **react-i18next**
@@ -55,7 +55,7 @@ pnpm dev
 ```
 
 Visit: [http://localhost:3000](http://localhost:3000)
-
+this might change every time when you run
 ---
 
 ## 🎮 How to Use
