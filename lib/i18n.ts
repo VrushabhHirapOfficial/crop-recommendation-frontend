@@ -1,9 +1,13 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
-import HttpBackend from "i18next-http-backend"
+import resourcesToBackend from "i18next-resources-to-backend"
 
 i18n
-  .use(HttpBackend)
+  .use(
+    resourcesToBackend((language: string, namespace: string) => {
+      return import(`../public/locales/${language}/${namespace}.json`)
+    })
+  )
   .use(initReactI18next)
   .init({
     fallbackLng: "en",
@@ -11,9 +15,6 @@ i18n
     debug: false,
     interpolation: {
       escapeValue: false, // React already escapes values
-    },
-    backend: {
-      loadPath: "/locales/{{lng}}/translation.json",
     },
     react: {
       useSuspense: false,
