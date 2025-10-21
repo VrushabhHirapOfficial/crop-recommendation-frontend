@@ -1,12 +1,18 @@
+"use client"
+
+import { useTranslation } from "react-i18next"
+
 export default function Footer() {
+  const { t } = useTranslation()
+
   return (
-    <footer className="bg-primary text-primary-foreground py-8 px-4 mt-16">
+    <footer className="bg-primary dark:bg-green-600 text-primary-foreground dark:text-white py-8 px-4 mt-16">
       <div className="max-w-6xl mx-auto text-center">
         <p className="text-sm">
-          <span className="font-bold">Indra Dhanu Smart Crop Recommendation System</span>
+          <span className="font-bold">{t("app_title_full")}</span>
         </p>
-        <p className="text-xs text-primary-foreground/70 mt-2">
-          Hackathon 2025 | Empowering Farmers with Data-Driven Decisions
+        <p className="text-xs text-primary-foreground/70 dark:text-green-100 mt-2">
+          {t("hackathon_tagline")}
         </p>
       </div>
     </footer>

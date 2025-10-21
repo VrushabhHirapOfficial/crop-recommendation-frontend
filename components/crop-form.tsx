@@ -25,9 +25,11 @@ interface FormData {
 interface CropFormProps {
   onSubmit: (data: FormData) => void
   loading: boolean
+  onWeatherFetch?: () => void
+  weatherFetched?: boolean
 }
 
-export default function CropForm({ onSubmit, loading }: CropFormProps) {
+export default function CropForm({ onSubmit, loading, onWeatherFetch, weatherFetched }: CropFormProps) {
   const { t } = useTranslation()
   const { defaultCity } = usePreferences()
   const [formData, setFormData] = useState<FormData>({
@@ -95,6 +97,9 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
       
       // Save to localStorage
       localStorage.setItem("indra-dhanu-default-weather", JSON.stringify(weatherData))
+
+      // Call parent callback for input animations
+      onWeatherFetch?.()
     } catch (error: any) {
       setWeatherMessage(error.message || t("weather_error"))
     } finally {
@@ -127,24 +132,24 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
 
   return (
     <motion.div
-      className="w-full max-w-4xl"
+      className="w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <form
         onSubmit={handleSubmit}
-        className="card-glass p-8 md:p-12 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl"
+        className="card-glass dark:bg-white/15 dark:backdrop-blur-2xl dark:border dark:border-white/30 p-8 md:p-12 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl mx-auto max-w-4xl"
       >
         <motion.h3
-          className="text-3xl md:text-4xl font-bold text-foreground mb-2 text-center"
+          className="text-3xl md:text-4xl font-bold text-foreground dark:text-gray-200 mb-2 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
           {t("enter_farm_conditions")}
         </motion.h3>
-        <p className="text-center text-muted-foreground mb-8">
+        <p className="text-center text-muted-foreground dark:text-gray-400 mb-8">
           {t("provide_data")}
         </p>
 
@@ -155,8 +160,8 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
         >
-          <Label htmlFor="city" className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <MapPin className="w-5 h-5 text-blue-600" />
+          <Label htmlFor="city" className="flex items-center gap-2 text-sm font-semibold text-foreground dark:text-gray-200">
+            <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             {t("location_optional")}
           </Label>
           <div className="space-y-2">
@@ -167,14 +172,14 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 disabled={loading || weatherLoading}
-                className="input-glass flex-1 bg-white/5 border-b-2 border-white/20 focus:border-accent rounded-none focus:rounded-xl"
+                className="input-glass flex-1 dark:bg-white/10 dark:border-white/20 bg-white/5 border-b-2 border-white/20 focus:border-accent rounded-none focus:rounded-xl"
                 placeholder={defaultCity || "Enter your city name"}
               />
               <Button
                 type="button"
                 onClick={handleFetchWeather}
                 disabled={loading || weatherLoading || !city}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-xl btn-animate"
+                className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 rounded-xl btn-animate"
               >
                 {weatherLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -187,7 +192,7 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
               </Button>
             </div>
             {weatherMessage && (
-              <p className={`text-xs ${weatherMessage.includes("success") || weatherMessage.includes("loaded") ? "text-green-600" : "text-red-600"}`}>
+              <p className={`text-xs ${weatherMessage.includes("success") || weatherMessage.includes("loaded") ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                 {weatherMessage}
               </p>
             )}
@@ -199,7 +204,7 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
               />
               <Label
                 htmlFor="autoFetch"
-                className="text-xs text-muted-foreground cursor-pointer select-none"
+                className="text-xs text-muted-foreground dark:text-gray-400 cursor-pointer select-none"
               >
                 {t("auto_fetch_weather")}
               </Label>
@@ -218,8 +223,8 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
               >
-                <Label htmlFor={field.name} className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <Icon className={`w-5 h-5 ${field.color}`} />
+                <Label htmlFor={field.name} className="flex items-center gap-2 text-sm font-semibold text-foreground dark:text-gray-200">
+                  <Icon className={`w-5 h-5 ${field.color.replace('600', '400')} dark:${field.color}`} />
                   {t(field.labelKey)}
                 </Label>
                 <div className="relative">
@@ -243,12 +248,12 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
                       onFocus={() => setFocusedField(field.name)}
                       onBlur={() => setFocusedField(null)}
                       disabled={loading}
-                      className="input-glass pr-12 bg-white/5 border-b-2 border-white/20 focus:border-accent rounded-none focus:rounded-xl"
+                      className={`input-glass pr-12 dark:bg-white/10 dark:border-white/20 bg-white/5 border-b-2 border-white/20 focus:border-accent rounded-none focus:rounded-xl ${weatherFetched && ['temperature', 'humidity', 'rainfall'].includes(field.name) ? 'input-highlight' : ''}`}
                       placeholder="0"
                     />
                   </motion.div>
                   {field.unit && (
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-medium">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground dark:text-gray-400 font-medium">
                       {field.unit}
                     </span>
                   )}
@@ -262,15 +267,22 @@ export default function CropForm({ onSubmit, loading }: CropFormProps) {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-accent via-accent to-orange-500 hover:from-accent hover:to-orange-600 text-white font-bold py-6 text-lg rounded-full transition-all duration-300 btn-animate btn-glow shadow-lg hover:shadow-2xl hover:shadow-accent/50"
+            className="w-full bg-gradient-to-r from-accent via-accent to-orange-500 hover:from-accent hover:to-orange-600 dark:from-yellow-500 dark:via-yellow-600 dark:to-orange-500 dark:hover:from-yellow-600 dark:hover:to-orange-600 text-white dark:text-gray-900 font-bold py-6 text-lg rounded-full transition-all duration-300 btn-animate btn-glow shadow-lg hover:shadow-2xl hover:shadow-accent/50 dark:hover:shadow-yellow-500/50"
           >
             {loading ? (
               <motion.div
                 className="flex items-center gap-2"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.8, 1, 0.8]
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut"
+                }}
               >
-                <Loader2 className="w-5 h-5" />
+                <Loader2 className="w-5 h-5 animate-spin" />
                 <span>{t("analyzing")}</span>
               </motion.div>
             ) : (

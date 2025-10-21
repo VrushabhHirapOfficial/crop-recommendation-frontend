@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import Header from "@/components/header"
 import CropForm from "@/components/crop-form"
 import ResultsDisplay from "@/components/results-display"
 import Footer from "@/components/footer"
+import { motion } from "framer-motion"
 
 interface CropResult {
   crop: string
@@ -28,6 +29,8 @@ export default function RecommendationPage() {
   const [topThree, setTopThree] = useState<CropResult[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [weatherFetched, setWeatherFetched] = useState(false)
+  const resultsRef = useRef<HTMLDivElement>(null)
 
   const handleSubmit = async (formData: {
     nitrogen: number
@@ -82,6 +85,13 @@ export default function RecommendationPage() {
             estimated_revenue: data.estimated_revenue * 0.86,
           },
         ])
+
+        // Auto-scroll to results after a short delay
+        setTimeout(() => {
+          if (resultsRef.current) {
+            resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 100)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred")
@@ -92,13 +102,58 @@ export default function RecommendationPage() {
     }
   }
 
+  const handleWeatherFetch = () => {
+    setWeatherFetched(true)
+    // Add animation to temperature, humidity, and rainfall inputs
+    setTimeout(() => {
+      setWeatherFetched(false)
+    }, 2000)
+  }
+
   return (
-    <main className="min-h-screen flex flex-col bg-background">
+    <main className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Enhanced glassmorphism background */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-cyan-50 via-emerald-50 to-amber-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"></div>
+
+        {/* Animated floating elements */}
+        <div className="absolute top-20 left-1/4 w-64 h-64 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 dark:from-white/5 dark:to-white/5 rounded-full blur-2xl animate-float opacity-60"></div>
+        <div className="absolute bottom-32 right-1/3 w-48 h-48 bg-gradient-to-br from-amber-200/20 to-yellow-200/20 dark:from-white/5 dark:to-white/5 rounded-full blur-2xl animate-float opacity-60" style={{ animationDelay: "3s" }}></div>
+      </div>
+
       <Header />
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
-        <CropForm onSubmit={handleSubmit} loading={loading} />
-        {error && <div className="mt-8 p-4 bg-destructive/10 text-destructive rounded-lg max-w-2xl">{error}</div>}
-        {results && <ResultsDisplay topCrop={results} topThree={topThree} />}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-8 relative z-10">
+        <motion.div
+          className="w-full max-w-5xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <CropForm onSubmit={handleSubmit} loading={loading} onWeatherFetch={handleWeatherFetch} weatherFetched={weatherFetched} />
+        </motion.div>
+
+        {error && (
+          <motion.div
+            className="mt-8 glass-card p-6 rounded-2xl max-w-2xl mx-auto text-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="text-red-400 text-lg font-semibold">{error}</div>
+          </motion.div>
+        )}
+
+        {results && (
+          <motion.div
+            ref={resultsRef}
+            className="mt-12 w-full max-w-5xl mx-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <ResultsDisplay topCrop={results} topThree={topThree} />
+          </motion.div>
+        )}
       </div>
       <Footer />
     </main>

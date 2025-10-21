@@ -3,6 +3,7 @@
   "learn_more": "Learn More",
   "get_recommendation": "Get Recommendation",
   "profile": "Profile",
+  "about_us": "About Us",
   "welcome": "Welcome to Indra Dhanu",
   "tagline": "Grow Smarter, Not Harder",
   "app_description": "Get data-driven crop recommendations based on your soil and climate conditions. Make informed decisions for a bountiful harvest.",
@@ -52,6 +53,7 @@
   "estimated_revenue": "Estimated Revenue",
   "top_3_crops": "Top 3 Suitable Crops",
   "revenue_comparison": "Revenue Comparison",
+  "option": "Option",
   
   "profile_updated": "Profile updated successfully",
   "preferences_info": "Your preferences are saved locally and will be used across the app to provide a personalized experience.",
@@ -147,5 +149,20 @@
   "real_time_updates_desc": "Model continuously learns from new data to improve recommendations over time",
   
   "ready_to_get_started": "Ready to Get Started?",
-  "get_started_desc": "Use our AI model to get personalized crop recommendations for your farm today."
+  "get_started_desc": "Use our AI model to get personalized crop recommendations for your farm today.",
+
+  "about_us_title": "About Us",
+  "about_us_description": "Meet the passionate team behind Indra Dhanu, working together to revolutionize agricultural technology and empower farmers with data-driven insights.",
+  "our_team": "Our Team",
+  "our_mission": "Our Mission",
+  "mission_description": "At Indra Dhanu, we believe that technology can transform agriculture by providing farmers with intelligent, data-driven insights. Our mission is to democratize access to agricultural knowledge, helping farmers make informed decisions that increase productivity, sustainability, and profitability.",
+  "innovation": "Innovation",
+  "innovation_description": "Continuously improving our technology to provide cutting-edge agricultural solutions",
+  "accessibility": "Accessibility",
+  "accessibility_description": "Making advanced agricultural insights available to farmers worldwide",
+  "sustainability": "Sustainability",
+  "sustainability_description": "Promoting environmentally responsible farming practices for future generations",
+  "get_in_touch": "Get In Touch",
+  "contact_description": "Have questions or want to collaborate? We'd love to hear from you.",
+  "contact_us": "Contact Us"
 }

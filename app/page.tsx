@@ -8,6 +8,8 @@ import LandingPage from "@/components/landing-page"
 import RecommendationPage from "@/components/recommendation-page"
 import LearnMorePage from "@/components/learn-more-page"
 import ProfilePage from "@/components/profile-page"
+import AboutUsPage from "@/components/about-us-page"
+import LanguageSwitcher from "@/components/language-switcher"
 
 export default function Home() {
   const { t } = useTranslation()
@@ -45,12 +47,16 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 via-blue-50 to-amber-50 relative overflow-hidden">
+    <main className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Enhanced glassmorphism background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-100/30 via-transparent to-blue-100/30 animate-pulse"></div>
+        {/* Main gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-cyan-50 via-emerald-50 to-amber-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"></div>
+
+        {/* Animated orbs with glassmorphism effects */}
         <div
           ref={orb1Ref}
-          className="absolute w-96 h-96 bg-green-200/20 rounded-full blur-3xl animate-float"
+          className="absolute w-96 h-96 bg-gradient-to-br from-primary-200/30 via-accent-200/20 to-secondary-200/30 dark:from-white/10 dark:via-white/5 dark:to-white/5 rounded-full blur-3xl animate-float"
           style={{
             top: "10%",
             left: "10%",
@@ -58,44 +64,60 @@ export default function Home() {
         ></div>
         <div
           ref={orb2Ref}
-          className="absolute w-96 h-96 bg-blue-200/20 rounded-full blur-3xl animate-float"
+          className="absolute w-96 h-96 bg-gradient-to-br from-secondary-200/30 via-primary-200/20 to-accent-200/30 dark:from-white/10 dark:via-white/5 dark:to-white/5 rounded-full blur-3xl animate-float"
           style={{
             top: "60%",
             right: "10%",
             animationDelay: "2s",
           }}
         ></div>
+
+        {/* Additional floating elements */}
+        <div className="absolute top-20 right-1/4 w-64 h-64 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 dark:from-white/5 dark:to-white/5 rounded-full blur-2xl animate-float opacity-60" style={{ animationDelay: "4s" }}></div>
+        <div className="absolute bottom-20 left-1/4 w-48 h-48 bg-gradient-to-br from-amber-200/20 to-yellow-200/20 dark:from-white/5 dark:to-white/5 rounded-full blur-2xl animate-float opacity-60" style={{ animationDelay: "6s" }}></div>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col min-h-screen relative z-10">
-        <div className="sticky top-0 z-50 glass-dark backdrop-blur-3xl border-b border-white/10">
+        {/* Enhanced glassmorphism header */}
+        <div className="sticky top-0 z-50 bg-white/10 dark:bg-white/10 backdrop-blur-xl border-b border-white/20 dark:border-white/20">
           <div className="max-w-7xl mx-auto px-2 sm:px-4">
-            <TabsList className="w-full justify-start rounded-none bg-transparent p-0 h-auto gap-1.5 sm:gap-3 py-2 sm:py-4 overflow-x-auto flex-nowrap">
-              <TabsTrigger
-                value="landing"
-                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
-              >
-                {t("home")}
-              </TabsTrigger>
-              <TabsTrigger
-                value="learn-more"
-                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
-              >
-                {t("learn_more")}
-              </TabsTrigger>
-              <TabsTrigger
-                value="recommendation"
-                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
-              >
-                {t("get_recommendation")}
-              </TabsTrigger>
-              <TabsTrigger
-                value="profile"
-                className="glass-tab data-[state=active]:glass-tab-active px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 btn-animate text-xs sm:text-sm whitespace-nowrap"
-              >
-                {t("profile")}
-              </TabsTrigger>
-            </TabsList>
+            <div className="flex items-center justify-between py-2 sm:py-4">
+              <TabsList className="flex-1 justify-start rounded-none bg-transparent p-0 h-auto gap-1.5 sm:gap-3 overflow-x-auto flex-nowrap">
+                <TabsTrigger
+                  value="landing"
+                  className="bg-transparent hover:bg-white/10 data-[state=active]:bg-green-200 data-[state=active]:text-green-800 data-[state=active]:font-semibold data-[state=active]:rounded-full data-[state=active]:px-3 data-[state=active]:py-1 px-4 py-2 rounded-lg font-medium transition-all duration-300 text-gray-600 dark:text-gray-300 dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-white dark:data-[state=active]:font-bold"
+                >
+                  {t("home")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="learn-more"
+                  className="bg-transparent hover:bg-white/10 data-[state=active]:bg-green-200 data-[state=active]:text-green-800 data-[state=active]:font-semibold data-[state=active]:rounded-full data-[state=active]:px-3 data-[state=active]:py-1 px-4 py-2 rounded-lg font-medium transition-all duration-300 text-gray-600 dark:text-gray-300 dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-white dark:data-[state=active]:font-bold"
+                >
+                  {t("learn_more")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="recommendation"
+                  className="bg-transparent hover:bg-white/10 data-[state=active]:bg-green-200 data-[state=active]:text-green-800 data-[state=active]:font-semibold data-[state=active]:rounded-full data-[state=active]:px-3 data-[state=active]:py-1 px-4 py-2 rounded-lg font-medium transition-all duration-300 text-gray-600 dark:text-gray-300 dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-white dark:data-[state=active]:font-bold"
+                >
+                  {t("get_recommendation")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="about-us"
+                  className="bg-transparent hover:bg-white/10 data-[state=active]:bg-green-200 data-[state=active]:text-green-800 data-[state=active]:font-semibold data-[state=active]:rounded-full data-[state=active]:px-3 data-[state=active]:py-1 px-4 py-2 rounded-lg font-medium transition-all duration-300 text-gray-600 dark:text-gray-300 dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-white dark:data-[state=active]:font-bold"
+                >
+                  {t("about_us")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="profile"
+                  className="bg-transparent hover:bg-white/10 data-[state=active]:bg-green-200 data-[state=active]:text-green-800 data-[state=active]:font-semibold data-[state=active]:rounded-full data-[state=active]:px-3 data-[state=active]:py-1 px-4 py-2 rounded-lg font-medium transition-all duration-300 text-gray-600 dark:text-gray-300 dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-white dark:data-[state=active]:font-bold"
+                >
+                  {t("profile")}
+                </TabsTrigger>
+              </TabsList>
+              <div className="ml-4">
+                <LanguageSwitcher />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -104,11 +126,15 @@ export default function Home() {
         </TabsContent>
 
         <TabsContent value="learn-more" className="flex-1 m-0">
-          <LearnMorePage />
+          <LearnMorePage onNavigate={setActiveTab} />
         </TabsContent>
 
         <TabsContent value="recommendation" className="flex-1 m-0">
           <RecommendationPage />
+        </TabsContent>
+
+        <TabsContent value="about-us" className="flex-1 m-0">
+          <AboutUsPage />
         </TabsContent>
 
         <TabsContent value="profile" className="flex-1 m-0">
