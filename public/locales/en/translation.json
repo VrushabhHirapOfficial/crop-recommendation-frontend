@@ -32,6 +32,9 @@
   "auto_fetch_weather": "Auto-fetch weather with default city",
   "fetch_weather": "Fetch Weather",
   "weather_fetched": "Weather data loaded successfully",
+  "soil_data_loaded": "Soil data loaded for",
+  "data_fetched_combined": "Weather & soil data loaded successfully",
+  "soil_data_not_found": "Sorry, we have default soil data for only 180 districts currently. Weather data loaded.",
   "weather_error": "Failed to fetch weather data",
   "city_not_found": "City not found. Please try again.",
   

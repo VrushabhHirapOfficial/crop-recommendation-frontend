@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { usePreferences } from "@/context/PreferencesContext"
 import { getWeatherByCity, extractFarmDataFromWeather } from "@/services/weather"
+import { getSoilDefaults } from "@/services/soil"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -25,11 +26,10 @@ interface FormData {
 interface CropFormProps {
   onSubmit: (data: FormData) => void
   loading: boolean
-  onWeatherFetch?: () => void
-  weatherFetched?: boolean
+  onWeatherFetch?: (autoFilledFields?: string[]) => void
 }
 
-export default function CropForm({ onSubmit, loading, onWeatherFetch, weatherFetched }: CropFormProps) {
+export default function CropForm({ onSubmit, loading, onWeatherFetch }: CropFormProps) {
   const { t } = useTranslation()
   const { defaultCity } = usePreferences()
   const [formData, setFormData] = useState<FormData>({
@@ -73,7 +73,15 @@ export default function CropForm({ onSubmit, loading, onWeatherFetch, weatherFet
     }
   }, [defaultCity, t])
 
-  // Fetch weather data
+  const [autoFilledFields, setAutoFilledFields] = useState<string[]>([])
+  const [soilDataFound, setSoilDataFound] = useState<boolean | null>(null)
+
+  // Reset soil data found state when city changes
+  useEffect(() => {
+    setSoilDataFound(null)
+  }, [city])
+
+  // Fetch weather and soil data
   const handleFetchWeather = async () => {
     if (!city) {
       setWeatherMessage(t("city_not_found"))
@@ -84,22 +92,57 @@ export default function CropForm({ onSubmit, loading, onWeatherFetch, weatherFet
     setWeatherMessage("")
 
     try {
-      const weatherData = await getWeatherByCity(city)
+      // Call both APIs simultaneously
+      const [weatherData, soilData] = await Promise.all([
+        getWeatherByCity(city),
+        getSoilDefaults(city) // May return null if city not found in JSON
+      ])
+
       const farmData = extractFarmDataFromWeather(weatherData)
-      
+
+      // Auto-fill weather data (always available)
       setFormData(prev => ({
         ...prev,
         temperature: farmData.temperature,
         humidity: farmData.humidity,
+        rainfall: farmData.rainfall,
       }))
 
-      setWeatherMessage(t("weather_fetched"))
-      
-      // Save to localStorage
+      // Auto-fill soil data only if available
+      if (soilData) {
+        setFormData(prev => ({
+          ...prev,
+          nitrogen: soilData.nitrogen,
+          phosphorus: soilData.phosphorus,
+          potassium: soilData.potassium,
+          ph_value: soilData.ph_value,
+        }))
+
+        setSoilDataFound(true)
+
+        // Track which fields were auto-filled for animation
+        setAutoFilledFields(['temperature', 'humidity', 'rainfall', 'nitrogen', 'phosphorus', 'potassium', 'ph_value'])
+
+        setWeatherMessage(`✅ ${t("data_fetched_combined")} for ${soilData.region}`)
+      } else {
+        // Only weather data available - soil data not found in JSON
+        setSoilDataFound(false)
+        setAutoFilledFields(['temperature', 'humidity', 'rainfall'])
+
+        setWeatherMessage(`⚠️ ${t("soil_data_not_found")}`)
+      }
+
+      // Save weather data to localStorage
       localStorage.setItem("indra-dhanu-default-weather", JSON.stringify(weatherData))
 
       // Call parent callback for input animations
       onWeatherFetch?.()
+
+      // Clear auto-filled animation after 3 seconds
+      setTimeout(() => {
+        setAutoFilledFields([])
+      }, 3000)
+
     } catch (error: any) {
       setWeatherMessage(error.message || t("weather_error"))
     } finally {
@@ -171,6 +214,14 @@ export default function CropForm({ onSubmit, loading, onWeatherFetch, weatherFet
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    if (city && !loading && !weatherLoading) {
+                      handleFetchWeather()
+                    }
+                  }
+                }}
                 disabled={loading || weatherLoading}
                 className="input-glass flex-1 dark:bg-white/10 dark:border-white/20 bg-white/5 border-b-2 border-white/20 focus:border-accent rounded-none focus:rounded-xl"
                 placeholder={defaultCity || "Enter your city name"}
@@ -245,10 +296,16 @@ export default function CropForm({ onSubmit, loading, onWeatherFetch, weatherFet
                       step="0.1"
                       value={formData[field.name as keyof FormData]}
                       onChange={handleChange}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                          handleSubmit(e)
+                        }
+                      }}
                       onFocus={() => setFocusedField(field.name)}
                       onBlur={() => setFocusedField(null)}
                       disabled={loading}
-                      className={`input-glass pr-12 dark:bg-white/10 dark:border-white/20 bg-white/5 border-b-2 border-white/20 focus:border-accent rounded-none focus:rounded-xl ${weatherFetched && ['temperature', 'humidity', 'rainfall'].includes(field.name) ? 'input-highlight' : ''}`}
+                      className={`input-glass pr-12 dark:bg-white/10 dark:border-white/20 bg-white/5 border-b-2 border-white/20 focus:border-accent rounded-none focus:rounded-xl ${autoFilledFields.includes(field.name) ? 'input-highlight bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-600' : ''}`}
                       placeholder="0"
                     />
                   </motion.div>
@@ -262,6 +319,44 @@ export default function CropForm({ onSubmit, loading, onWeatherFetch, weatherFet
             )
           })}
         </div>
+
+        {/* Info Note about Auto-filled Values */}
+        {soilDataFound !== null && (
+          <motion.div
+            className={`mb-6 p-4 rounded-xl ${
+              soilDataFound
+                ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700'
+                : 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700'
+            }`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <div className="flex items-start gap-3">
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                soilDataFound
+                  ? 'bg-green-500 dark:bg-green-400'
+                  : 'bg-yellow-500 dark:bg-yellow-400'
+              }`}>
+                <span className="text-white text-xs font-bold">
+                  {soilDataFound ? '✓' : '⚠'}
+                </span>
+              </div>
+              <div>
+                <p className={`text-sm font-medium ${
+                  soilDataFound
+                    ? 'text-green-800 dark:text-green-200'
+                    : 'text-yellow-800 dark:text-yellow-200'
+                }`}>
+                  {soilDataFound
+                    ? '📊 Default soil values for your region loaded. You can edit them.'
+                    : '📍 Weather data loaded. Enter soil values manually or try a different city.'
+                  }
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
           <Button

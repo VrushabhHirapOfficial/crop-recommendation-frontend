@@ -37,10 +37,12 @@ interface WeatherResponse {
   hourly: {
     temperature_2m: number[]
     relative_humidity_2m: number[]
+    precipitation: number[]
   }
   hourly_units: {
     temperature_2m: string
     relative_humidity_2m: string
+    precipitation: string
   }
 }
 
@@ -52,6 +54,7 @@ export interface WeatherData {
   main: {
     temp: number
     humidity: number
+    rainfall: number
   }
 }
 
@@ -108,7 +111,7 @@ export async function getWeatherByCity(city: string): Promise<WeatherData> {
       params: {
         latitude: location.latitude,
         longitude: location.longitude,
-        hourly: "temperature_2m,relative_humidity_2m",
+        hourly: "temperature_2m,relative_humidity_2m,precipitation",
         current_weather: true,
       },
     })
@@ -116,6 +119,7 @@ export async function getWeatherByCity(city: string): Promise<WeatherData> {
     // Get current hour's data (first element in hourly arrays)
     const currentTemp = response.data.hourly.temperature_2m[0]
     const currentHumidity = response.data.hourly.relative_humidity_2m[0]
+    const currentRainfall = response.data.hourly.precipitation[0]
 
     // Format data to match our interface
     return {
@@ -126,6 +130,7 @@ export async function getWeatherByCity(city: string): Promise<WeatherData> {
       main: {
         temp: currentTemp,
         humidity: currentHumidity,
+        rainfall: currentRainfall,
       },
     }
   } catch (error: any) {
@@ -148,7 +153,8 @@ export function extractFarmDataFromWeather(weatherData: WeatherData) {
   return {
     temperature: weatherData.main.temp,
     humidity: weatherData.main.humidity,
-    // Note: Open-Meteo doesn't provide N, P, K, pH, or rainfall data
+    rainfall: weatherData.main.rainfall,
+    // Note: Open-Meteo doesn't provide N, P, K, or pH data
     // These would need to be entered manually or from a soil testing service
   }
 }

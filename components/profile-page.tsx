@@ -118,8 +118,12 @@ export default function ProfilePage() {
             <Card className="glass-card dark:bg-white/10 dark:backdrop-blur-lg dark:border dark:border-white/20 p-8 mb-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 glass-card dark:bg-white/20 flex items-center justify-center text-3xl">
-                    <User className="w-10 h-10 text-primary dark:text-green-400" />
+                  <div className="w-20 h-20 glass-card dark:bg-white/20 flex items-center justify-center rounded-full overflow-hidden">
+                    <img
+                      src="/hrishi.jpg"
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-foreground dark:text-gray-200">{profileData.name}</h2>

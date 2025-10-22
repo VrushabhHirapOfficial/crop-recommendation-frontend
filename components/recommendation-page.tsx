@@ -29,7 +29,6 @@ export default function RecommendationPage() {
   const [topThree, setTopThree] = useState<CropResult[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [weatherFetched, setWeatherFetched] = useState(false)
   const resultsRef = useRef<HTMLDivElement>(null)
 
   const handleSubmit = async (formData: {
@@ -68,23 +67,10 @@ export default function RecommendationPage() {
           estimated_revenue: data.estimated_revenue,
         })
 
-        setTopThree([
-          data,
-          {
-            crop: data.crop,
-            confidence: Math.max(0, data.confidence - 5),
-            yield_kg_per_hectare: data.yield_kg_per_hectare * 0.95,
-            price_per_quintal: data.price_per_quintal * 0.98,
-            estimated_revenue: data.estimated_revenue * 0.93,
-          },
-          {
-            crop: data.crop,
-            confidence: Math.max(0, data.confidence - 10),
-            yield_kg_per_hectare: data.yield_kg_per_hectare * 0.9,
-            price_per_quintal: data.price_per_quintal * 0.96,
-            estimated_revenue: data.estimated_revenue * 0.86,
-          },
-        ])
+        // Generate alternative crop suggestions based on the primary crop
+        const alternativeCrops = getAlternativeCrops(data.crop, data)
+
+        setTopThree(alternativeCrops)
 
         // Auto-scroll to results after a short delay
         setTimeout(() => {
@@ -102,12 +88,149 @@ export default function RecommendationPage() {
     }
   }
 
-  const handleWeatherFetch = () => {
-    setWeatherFetched(true)
-    // Add animation to temperature, humidity, and rainfall inputs
+// Alternative crops mapping based on similar growing conditions
+const CROP_ALTERNATIVES: Record<string, Array<{crop: string, confidenceAdjustment: number, yieldMultiplier: number, priceMultiplier: number, revenueMultiplier: number}>> = {
+  "muskmelon": [
+    { crop: "watermelon", confidenceAdjustment: -8, yieldMultiplier: 1.1, priceMultiplier: 0.85, revenueMultiplier: 0.95 },
+    { crop: "papaya", confidenceAdjustment: -12, yieldMultiplier: 0.9, priceMultiplier: 1.2, revenueMultiplier: 1.08 }
+  ],
+  "watermelon": [
+    { crop: "muskmelon", confidenceAdjustment: -8, yieldMultiplier: 0.9, priceMultiplier: 1.15, revenueMultiplier: 1.05 },
+    { crop: "cucumber", confidenceAdjustment: -10, yieldMultiplier: 1.2, priceMultiplier: 0.7, revenueMultiplier: 0.84 }
+  ],
+  "papaya": [
+    { crop: "banana", confidenceAdjustment: -10, yieldMultiplier: 1.3, priceMultiplier: 0.8, revenueMultiplier: 1.04 },
+    { crop: "guava", confidenceAdjustment: -15, yieldMultiplier: 0.8, priceMultiplier: 1.4, revenueMultiplier: 1.12 }
+  ],
+  "rice": [
+    { crop: "wheat", confidenceAdjustment: -5, yieldMultiplier: 0.8, priceMultiplier: 1.25, revenueMultiplier: 1.0 },
+    { crop: "maize", confidenceAdjustment: -8, yieldMultiplier: 1.1, priceMultiplier: 0.9, revenueMultiplier: 0.99 }
+  ],
+  "wheat": [
+    { crop: "rice", confidenceAdjustment: -5, yieldMultiplier: 1.25, priceMultiplier: 0.8, revenueMultiplier: 1.0 },
+    { crop: "barley", confidenceAdjustment: -10, yieldMultiplier: 0.9, priceMultiplier: 1.1, revenueMultiplier: 0.99 }
+  ],
+  "maize": [
+    { crop: "rice", confidenceAdjustment: -8, yieldMultiplier: 0.9, priceMultiplier: 1.1, revenueMultiplier: 0.99 },
+    { crop: "sorghum", confidenceAdjustment: -12, yieldMultiplier: 0.8, priceMultiplier: 1.2, revenueMultiplier: 0.96 }
+  ],
+  "cotton": [
+    { crop: "sugarcane", confidenceAdjustment: -10, yieldMultiplier: 1.5, priceMultiplier: 0.6, revenueMultiplier: 0.9 },
+    { crop: "soybean", confidenceAdjustment: -8, yieldMultiplier: 0.7, priceMultiplier: 1.3, revenueMultiplier: 0.91 }
+  ],
+  "sugarcane": [
+    { crop: "cotton", confidenceAdjustment: -10, yieldMultiplier: 0.67, priceMultiplier: 1.67, revenueMultiplier: 1.11 },
+    { crop: "maize", confidenceAdjustment: -12, yieldMultiplier: 0.8, priceMultiplier: 1.1, revenueMultiplier: 0.88 }
+  ],
+  "potato": [
+    { crop: "tomato", confidenceAdjustment: -8, yieldMultiplier: 1.2, priceMultiplier: 0.9, revenueMultiplier: 1.08 },
+    { crop: "onion", confidenceAdjustment: -10, yieldMultiplier: 0.9, priceMultiplier: 1.2, revenueMultiplier: 1.08 }
+  ],
+  "tomato": [
+    { crop: "potato", confidenceAdjustment: -8, yieldMultiplier: 0.83, priceMultiplier: 1.11, revenueMultiplier: 0.93 },
+    { crop: "chilli", confidenceAdjustment: -12, yieldMultiplier: 0.7, priceMultiplier: 1.5, revenueMultiplier: 1.05 }
+  ],
+  "banana": [
+    { crop: "papaya", confidenceAdjustment: -10, yieldMultiplier: 0.77, priceMultiplier: 1.25, revenueMultiplier: 0.96 },
+    { crop: "coconut", confidenceAdjustment: -15, yieldMultiplier: 0.5, priceMultiplier: 2.0, revenueMultiplier: 1.0 }
+  ],
+  "mango": [
+    { crop: "guava", confidenceAdjustment: -12, yieldMultiplier: 0.8, priceMultiplier: 1.2, revenueMultiplier: 0.96 },
+    { crop: "orange", confidenceAdjustment: -15, yieldMultiplier: 0.7, priceMultiplier: 1.4, revenueMultiplier: 0.98 }
+  ],
+  "orange": [
+    { crop: "lemon", confidenceAdjustment: -10, yieldMultiplier: 1.1, priceMultiplier: 0.9, revenueMultiplier: 0.99 },
+    { crop: "mango", confidenceAdjustment: -15, yieldMultiplier: 0.7, priceMultiplier: 1.3, revenueMultiplier: 0.91 }
+  ],
+  "coconut": [
+    { crop: "arecanut", confidenceAdjustment: -12, yieldMultiplier: 0.8, priceMultiplier: 1.2, revenueMultiplier: 0.96 },
+    { crop: "banana", confidenceAdjustment: -15, yieldMultiplier: 2.0, priceMultiplier: 0.5, revenueMultiplier: 1.0 }
+  ],
+  "grapes": [
+    { crop: "pomegranate", confidenceAdjustment: -10, yieldMultiplier: 0.8, priceMultiplier: 1.3, revenueMultiplier: 1.04 },
+    { crop: "orange", confidenceAdjustment: -12, yieldMultiplier: 0.9, priceMultiplier: 1.1, revenueMultiplier: 0.99 }
+  ],
+  "pomegranate": [
+    { crop: "grapes", confidenceAdjustment: -10, yieldMultiplier: 1.25, priceMultiplier: 0.8, revenueMultiplier: 1.0 },
+    { crop: "guava", confidenceAdjustment: -12, yieldMultiplier: 0.9, priceMultiplier: 1.1, revenueMultiplier: 0.99 }
+  ],
+  "apple": [
+    { crop: "pear", confidenceAdjustment: -12, yieldMultiplier: 0.9, priceMultiplier: 1.1, revenueMultiplier: 0.99 },
+    { crop: "peach", confidenceAdjustment: -15, yieldMultiplier: 0.8, priceMultiplier: 1.2, revenueMultiplier: 0.96 }
+  ],
+  "chickpea": [
+    { crop: "lentil", confidenceAdjustment: -8, yieldMultiplier: 0.9, priceMultiplier: 1.1, revenueMultiplier: 0.99 },
+    { crop: "pea", confidenceAdjustment: -10, yieldMultiplier: 0.8, priceMultiplier: 1.2, revenueMultiplier: 0.96 }
+  ],
+  "blackgram": [
+    { crop: "greengram", confidenceAdjustment: -8, yieldMultiplier: 1.1, priceMultiplier: 0.9, revenueMultiplier: 0.99 },
+    { crop: "chickpea", confidenceAdjustment: -10, yieldMultiplier: 1.2, priceMultiplier: 0.8, revenueMultiplier: 0.96 }
+  ],
+  "mothbeans": [
+    { crop: "blackgram", confidenceAdjustment: -10, yieldMultiplier: 1.1, priceMultiplier: 0.9, revenueMultiplier: 0.99 },
+    { crop: "greengram", confidenceAdjustment: -12, yieldMultiplier: 1.2, priceMultiplier: 0.8, revenueMultiplier: 0.96 }
+  ],
+  "lentil": [
+    { crop: "chickpea", confidenceAdjustment: -8, yieldMultiplier: 1.2, priceMultiplier: 0.8, revenueMultiplier: 0.96 },
+    { crop: "pea", confidenceAdjustment: -10, yieldMultiplier: 0.9, priceMultiplier: 1.1, revenueMultiplier: 0.99 }
+  ]
+}
+
+/**
+ * Generate alternative crop suggestions based on the primary crop recommendation
+ */
+function getAlternativeCrops(primaryCrop: string, primaryData: ApiResponse) {
+  const normalizedPrimaryCrop = primaryCrop.toLowerCase()
+
+  // Get alternative crops for this primary crop
+  const alternatives = CROP_ALTERNATIVES[normalizedPrimaryCrop]
+
+  if (!alternatives || alternatives.length < 2) {
+    // Fallback for crops not in mapping - create generic alternatives
+    return [
+      primaryData, // Primary crop (Option 1)
+      {
+        crop: `${primaryCrop} (High Yield)`,
+        confidence: Math.max(0, primaryData.confidence - 8),
+        yield_kg_per_hectare: Math.round(primaryData.yield_kg_per_hectare * 1.1),
+        price_per_quintal: Math.round(primaryData.price_per_quintal * 0.9),
+        estimated_revenue: Math.round(primaryData.estimated_revenue * 0.99),
+      },
+      {
+        crop: `${primaryCrop} (Premium)`,
+        confidence: Math.max(0, primaryData.confidence - 12),
+        yield_kg_per_hectare: Math.round(primaryData.yield_kg_per_hectare * 0.8),
+        price_per_quintal: Math.round(primaryData.price_per_quintal * 1.3),
+        estimated_revenue: Math.round(primaryData.estimated_revenue * 1.04),
+      }
+    ]
+  }
+
+  // Generate the top 3 crops including the primary
+  return [
+    primaryData, // Primary crop (Option 1)
+    {
+      crop: alternatives[0].crop,
+      confidence: Math.max(0, primaryData.confidence + alternatives[0].confidenceAdjustment),
+      yield_kg_per_hectare: Math.round(primaryData.yield_kg_per_hectare * alternatives[0].yieldMultiplier),
+      price_per_quintal: Math.round(primaryData.price_per_quintal * alternatives[0].priceMultiplier),
+      estimated_revenue: Math.round(primaryData.estimated_revenue * alternatives[0].revenueMultiplier),
+    },
+    {
+      crop: alternatives[1].crop,
+      confidence: Math.max(0, primaryData.confidence + alternatives[1].confidenceAdjustment),
+      yield_kg_per_hectare: Math.round(primaryData.yield_kg_per_hectare * alternatives[1].yieldMultiplier),
+      price_per_quintal: Math.round(primaryData.price_per_quintal * alternatives[1].priceMultiplier),
+      estimated_revenue: Math.round(primaryData.estimated_revenue * alternatives[1].revenueMultiplier),
+    }
+  ]
+}
+
+  const handleWeatherFetch = (autoFilledFields?: string[]) => {
+    // Add animation to all auto-filled inputs
     setTimeout(() => {
-      setWeatherFetched(false)
-    }, 2000)
+      // Animation handled by individual input components now
+    }, 100)
   }
 
   return (
@@ -129,7 +252,7 @@ export default function RecommendationPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <CropForm onSubmit={handleSubmit} loading={loading} onWeatherFetch={handleWeatherFetch} weatherFetched={weatherFetched} />
+          <CropForm onSubmit={handleSubmit} loading={loading} onWeatherFetch={handleWeatherFetch} />
         </motion.div>
 
         {error && (

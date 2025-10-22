@@ -44,7 +44,7 @@ const teamMembers = [
     description: "Contributing to the development and success of Indra Dhanu with dedication and technical expertise.",
     github: "https://github.com/HrishikeshBhande06",
     linkedin: "http://www.linkedin.com/in/hrishikesh-bhande-b26407252",
-    avatar: "/hrishikesh.jpg",
+    avatar: "/hrishi.jpg",
     avatarType: "image",
     skills: ["Development", "Problem Solving", "Team Collaboration"]
   }
