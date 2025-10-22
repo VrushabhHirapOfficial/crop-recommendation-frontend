@@ -29,6 +29,15 @@ export default function RecommendationPage() {
   const [topThree, setTopThree] = useState<CropResult[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [inputData, setInputData] = useState<{
+    nitrogen: number
+    phosphorus: number
+    potassium: number
+    temperature: number
+    humidity: number
+    ph_value: number
+    rainfall: number
+  } | null>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
 
   const handleSubmit = async (formData: {
@@ -67,6 +76,9 @@ export default function RecommendationPage() {
           estimated_revenue: data.estimated_revenue,
         })
 
+        // Store input data for PDF generation
+        setInputData(formData)
+
         // Generate alternative crop suggestions based on the primary crop
         const alternativeCrops = getAlternativeCrops(data.crop, data)
 
@@ -83,6 +95,7 @@ export default function RecommendationPage() {
       setError(err instanceof Error ? err.message : "An error occurred")
       setResults(null)
       setTopThree([])
+      setInputData(null)
     } finally {
       setLoading(false)
     }
@@ -274,7 +287,7 @@ function getAlternativeCrops(primaryCrop: string, primaryData: ApiResponse) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <ResultsDisplay topCrop={results} topThree={topThree} />
+            <ResultsDisplay topCrop={results} topThree={topThree} inputData={inputData} />
           </motion.div>
         )}
       </div>

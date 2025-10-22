@@ -2,9 +2,17 @@
 
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { TrendingUp, DollarSign, Target, Award } from "lucide-react"
+import { TrendingUp, DollarSign, Target, Award, Download, Loader2, AlertCircle } from "lucide-react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import { motion } from "framer-motion"
+import { downloadPDFReport, PDFReportData } from "@/services/pdf"
+import dynamic from 'next/dynamic';
+
+// Dynamically import the chart component to avoid SSR issues
+const CropHistoryChart = dynamic(
+  () => import('@/components/CropHistoryChart'),
+  { ssr: false }
+);
 
 interface CropResult {
   crop: string
@@ -14,18 +22,66 @@ interface CropResult {
   estimated_revenue: number
 }
 
+interface SoilData {
+  nitrogen: number
+  phosphorus: number
+  potassium: number
+  temperature: number
+  humidity: number
+  ph_value: number
+  rainfall: number
+}
+
 interface ResultsDisplayProps {
   topCrop: CropResult
   topThree: CropResult[]
+  inputData?: SoilData | null
 }
 
-export default function ResultsDisplay({ topCrop, topThree }: ResultsDisplayProps) {
+export default function ResultsDisplay({ topCrop, topThree, inputData }: ResultsDisplayProps) {
   const [isVisible, setIsVisible] = useState(false)
+  const [downloading, setDownloading] = useState(false)
+  const [pdfError, setPdfError] = useState<string | null>(null)
   const { t } = useTranslation()
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
+
+  const handleDownloadPDF = async () => {
+    if (!inputData) {
+      setPdfError('No input data available to generate PDF');
+      return;
+    }
+
+    setDownloading(true);
+    setPdfError(null);
+
+    try {
+      // Create PDF report data with both soil data and crop recommendations
+      const reportData: PDFReportData = {
+        soilData: inputData,
+        topCrop: topCrop,
+        topThree: topThree
+      };
+
+      const result = await downloadPDFReport(reportData);
+
+      if (!result.success) {
+        setPdfError(result.error || 'Failed to generate PDF');
+      } else {
+        // Success - show a brief success message
+        setPdfError(null);
+        // You could add a success toast here if you have a toast system
+        console.log('PDF report downloaded successfully');
+      }
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      setPdfError('An unexpected error occurred while generating the PDF');
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const chartData = topThree.map((crop, idx) => ({
     name: `${t("option")} ${idx + 1}`,
@@ -140,6 +196,53 @@ export default function ResultsDisplay({ topCrop, topThree }: ResultsDisplayProp
         </div>
       </motion.div>
 
+      {/* PDF Download Button and Status */}
+      <motion.div className="flex flex-col items-center" variants={itemVariants}>
+        <motion.button
+          onClick={handleDownloadPDF}
+          disabled={downloading || !inputData}
+          className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-colors ${
+            downloading || !inputData
+              ? 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
+              : 'bg-accent hover:bg-accent/90 text-white dark:bg-yellow-500 dark:hover:bg-yellow-600'
+          }`}
+          whileHover={!downloading && inputData ? { scale: 1.05 } : {}}
+          whileTap={!downloading && inputData ? { scale: 0.95 } : {}}
+        >
+          {downloading ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              <span>Generating Report...</span>
+            </>
+          ) : (
+            <>
+              <Download className="w-5 h-5" />
+              <span>Download Report</span>
+            </>
+          )}
+        </motion.button>
+
+        {/* Error Message */}
+        {pdfError && (
+          <motion.div
+            className="mt-4 px-4 py-2 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-lg text-sm flex items-center gap-2 max-w-md text-center"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{pdfError}</span>
+          </motion.div>
+        )}
+
+        {/* Help Text */}
+        {!pdfError && !downloading && (
+          <p className="text-sm text-muted-foreground mt-2 text-center">
+            Get a comprehensive HTML report that can be printed as PDF (Ctrl+P → Save as PDF)
+          </p>
+        )}
+      </motion.div>
+
       <motion.div variants={itemVariants}>
         <h3 className="text-2xl md:text-3xl font-bold text-foreground dark:text-white mb-6">{t("top_3_crops")}</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -199,7 +302,12 @@ export default function ResultsDisplay({ topCrop, topThree }: ResultsDisplayProp
         </div>
       </motion.div>
 
-      <motion.div className="glass card-glass dark:bg-white/10 dark:backdrop-blur-lg dark:border dark:border-white/20 p-8 rounded-3xl" variants={itemVariants}>
+      {/* Historical Data Chart */}
+      <motion.div variants={itemVariants}>
+        <CropHistoryChart cropName={topCrop.crop} />
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
         <h3 className="text-2xl font-bold text-foreground dark:text-gray-200 mb-8">{t("revenue_comparison")}</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
