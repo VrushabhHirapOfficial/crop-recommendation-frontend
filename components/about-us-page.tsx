@@ -17,25 +17,36 @@ const teamMembers = [
   },
   {
     id: 2,
-    name: "Sarah Chen",
-    role: "UI/UX Designer",
-    description: "Specializes in creating intuitive and visually appealing designs that enhance user experience across all platforms.",
-    github: "https://github.com/sarahchen",
-    linkedin: "https://linkedin.com/in/sarahchen",
-    avatar: "🎨",
-    avatarType: "emoji",
-    skills: ["Figma", "Adobe XD", "User Research", "Prototyping"]
+    name: "Manthan Marathe",
+    role: "Lead Backend Developer",
+    description: "Expert in building scalable backend systems and APIs, specializing in data processing and machine learning integration for agricultural applications.",
+    github: "https://github.com/ManthanMarathe223?tab=overview&from=2025-08-01&to=2025-08-22",
+    linkedin: "https://www.linkedin.com/in/manthanmarathe",
+    avatar: "/manthan.jpg",
+    avatarType: "image",
+    skills: ["Node.js", "Python", "Machine Learning", "API Design", "Database Management"]
   },
   {
     id: 3,
-    name: "Alex Rodriguez",
-    role: "Backend Developer",
-    description: "Expert in building scalable APIs and database systems, ensuring robust and efficient data processing for agricultural insights.",
-    github: "https://github.com/alexrodriguez",
-    linkedin: "https://linkedin.com/in/alexrodriguez",
-    avatar: "🔧",
-    avatarType: "emoji",
-    skills: ["Node.js", "Python", "PostgreSQL", "API Design"]
+    name: "Harshvardhan Bavle",
+    role: "Team Member",
+    description: "Contributing to the development and success of Indra Dhanu with dedication and expertise.",
+    github: "",
+    linkedin: "https://www.linkedin.com/in/harshwardhan-bavale-86007032b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    avatar: "/harshvardhan.jpg",
+    avatarType: "image",
+    skills: ["Development", "Team Collaboration"]
+  },
+  {
+    id: 4,
+    name: "Hrishikesh Bhande",
+    role: "Team Member",
+    description: "Contributing to the development and success of Indra Dhanu with dedication and technical expertise.",
+    github: "https://github.com/HrishikeshBhande06",
+    linkedin: "http://www.linkedin.com/in/hrishikesh-bhande-b26407252",
+    avatar: "/hrishikesh.jpg",
+    avatarType: "image",
+    skills: ["Development", "Problem Solving", "Team Collaboration"]
   }
 ]
 
@@ -104,14 +115,16 @@ export default function AboutUsPage() {
 
                 {/* Social Links */}
                 <div className="flex justify-center gap-4">
-                  <a
-                    href={member.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="glass-button dark:bg-white/10 dark:border dark:border-white/20 p-3 hover:bg-primary/20 dark:hover:bg-green-500/20 transition-colors duration-300"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
+                  {member.github && (
+                    <a
+                      href={member.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="glass-button dark:bg-white/10 dark:border dark:border-white/20 p-3 hover:bg-primary/20 dark:hover:bg-green-500/20 transition-colors duration-300"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                  )}
                   <a
                     href={member.linkedin}
                     target="_blank"
