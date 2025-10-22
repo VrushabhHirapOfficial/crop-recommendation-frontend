@@ -35,7 +35,7 @@ const teamMembers = [
     linkedin: "https://www.linkedin.com/in/harshwardhan-bavale-86007032b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     avatar: "/harshvardhan.jpg",
     avatarType: "image",
-    skills: ["Development", "Team Collaboration"]
+    skills: ["Content Writing", "Data Collection", "Presentation & Demo", "UI/UX Improvements"]
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const teamMembers = [
     linkedin: "http://www.linkedin.com/in/hrishikesh-bhande-b26407252",
     avatar: "/hrishi.jpg",
     avatarType: "image",
-    skills: ["Development", "Problem Solving", "Team Collaboration"]
+    skills: ["Testing", "Documentation", "Market Research", "Social Media Content"]
   }
 ]
 
