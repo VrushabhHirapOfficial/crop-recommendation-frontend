@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import LanguageSelector from "@/components/language-selector"
-import { User, Mail, Briefcase, MapPin, Check, Settings, Globe, Edit, Phone, Loader2, AlertCircle, Moon, Sun } from "lucide-react"
+import { User, UserCircle, Mail, Briefcase, MapPin, Check, Settings, Globe, Edit, Phone, Loader2, AlertCircle, Moon, Sun } from "lucide-react"
 import { motion } from "framer-motion"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
@@ -119,11 +119,7 @@ export default function ProfilePage() {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                   <div className="w-20 h-20 glass-card dark:bg-white/20 flex items-center justify-center rounded-full overflow-hidden">
-                    <img
-                      src="/hrishi.jpg"
-                      alt="Profile"
-                      className="w-full h-full object-cover"
-                    />
+                    <UserCircle className="w-16 h-16 text-primary dark:text-green-400" />
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-foreground dark:text-gray-200">{profileData.name}</h2>
