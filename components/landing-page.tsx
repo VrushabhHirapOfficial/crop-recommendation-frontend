@@ -17,44 +17,44 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-primary/5 via-background to-secondary/5 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden">
+      <section className="relative min-h-[90vh] sm:min-h-screen flex items-center justify-center px-4 sm:px-6 py-16 sm:py-20 bg-gradient-to-br from-primary/5 via-background to-secondary/5 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 dark:bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent/10 dark:bg-yellow-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
+          <div className="absolute top-10 sm:top-20 left-2 sm:left-10 w-48 sm:w-72 h-48 sm:h-72 bg-primary/10 dark:bg-green-500/10 rounded-full blur-2xl sm:blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 sm:bottom-20 right-2 sm:right-10 w-64 sm:w-96 h-64 sm:h-96 bg-secondary/10 dark:bg-blue-500/10 rounded-full blur-2xl sm:blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/3 right-1/4 w-32 sm:w-64 h-32 sm:h-64 bg-accent/10 dark:bg-yellow-500/10 rounded-full blur-xl sm:blur-2xl animate-pulse delay-500"></div>
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="relative z-10 w-full max-w-4xl mx-auto text-center px-2 sm:px-4">
           <div
             className={`transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-accent/10 dark:bg-yellow-500/20 rounded-full border border-accent/20 dark:border-yellow-500/30">
-              <Sprout className="w-4 h-4 text-accent dark:text-yellow-400" />
-              <span className="text-sm font-semibold text-accent dark:text-yellow-300">{t("ai_powered_agriculture")}</span>
+            <div className="inline-flex items-center gap-2 mb-6 sm:mb-8 px-3 py-1.5 sm:px-4 sm:py-2 bg-accent/10 dark:bg-yellow-500/20 rounded-full border border-accent/20 dark:border-yellow-500/30">
+              <Sprout className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent dark:text-yellow-400" />
+              <span className="text-xs sm:text-sm font-semibold text-accent dark:text-yellow-300">{t("ai_powered_agriculture")}</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground dark:text-white mb-8 text-balance leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-foreground dark:text-white mb-6 sm:mb-8 text-balance leading-tight">
               {t("grow_smarter_with")} <span className="text-primary dark:text-green-400">Indra Dhanu</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-muted-foreground dark:text-gray-300 mb-12 text-balance max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl md:text-2xl text-muted-foreground dark:text-gray-300 mb-8 sm:mb-12 text-balance max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
               {t("hero_description")}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-2 sm:px-0">
               <Button
                 size="lg"
-                className="bg-accent hover:bg-accent/90 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-accent-foreground dark:text-gray-900 font-bold text-lg px-8 py-6 rounded-lg btn-animate"
+                className="bg-accent hover:bg-accent/90 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-accent-foreground dark:text-gray-900 font-bold text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 rounded-lg btn-animate w-full sm:w-auto"
                 onClick={() => onNavigate("recommendation")}
               >
-                {t("get_started")} <ArrowRight className="w-5 h-5 ml-2" />
+                {t("get_started")} <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1.5 sm:ml-2" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="font-bold text-lg px-8 py-6 rounded-lg border-2 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 dark:border-gray-600 bg-transparent btn-animate"
+                className="font-bold text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 rounded-lg border-2 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 dark:border-gray-600 bg-transparent btn-animate w-full sm:w-auto"
                 onClick={() => onNavigate("learn-more")}
               >
                 {t("learn_more")}
@@ -62,18 +62,18 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 md:gap-8 mb-20">
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-2">98%</div>
-                <p className="text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("accuracy_rate")}</p>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 mb-12 sm:mb-20 px-2 sm:px-0">
+              <div className="text-center p-2 sm:p-3 bg-white/5 dark:bg-white/5 rounded-xl backdrop-blur-sm">
+                <div className="text-xl sm:text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-1 sm:mb-2">98%</div>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("accuracy_rate")}</p>
               </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-2">50K+</div>
-                <p className="text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("farmers_helped")}</p>
+              <div className="text-center p-2 sm:p-3 bg-white/5 dark:bg-white/5 rounded-xl backdrop-blur-sm">
+                <div className="text-xl sm:text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-1 sm:mb-2">50K+</div>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("farmers_helped")}</p>
               </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-2">₹2.5Cr</div>
-                <p className="text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("revenue_generated")}</p>
+              <div className="text-center p-2 sm:p-3 bg-white/5 dark:bg-white/5 rounded-xl backdrop-blur-sm">
+                <div className="text-xl sm:text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-1 sm:mb-2">₹2.5Cr</div>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("revenue_generated")}</p>
               </div>
             </div>
           </div>
@@ -81,39 +81,45 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
       </section>
 
       {/* Combined Content Section */}
-      <section className="py-16 px-4 bg-background dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto w-full space-y-20">
+      <section className="py-12 sm:py-16 px-4 sm:px-6 bg-background dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto w-full space-y-12 sm:space-y-20">
 
           {/* Our Trained ML Model */}
-          <div className="text-center bg-gradient-to-br from-background to-muted/30 dark:from-white/10 dark:to-white/5 dark:backdrop-blur-xl dark:border dark:border-white/20 p-16 rounded-3xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white mb-4 text-balance">{t("our_trained_ml_model")}</h2>
-            <p className="text-lg text-muted-foreground dark:text-gray-300 max-w-2xl mx-auto mb-12">
+          <div className="text-left bg-gradient-to-br from-background to-muted/30 dark:from-white/10 dark:to-white/5 dark:backdrop-blur-xl dark:border dark:border-white/20 p-6 sm:p-10 md:p-12 rounded-2xl sm:rounded-3xl">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-foreground dark:text-white mb-4 sm:mb-6 text-balance">
+              {t("our_trained_ml_model")}
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground dark:text-gray-300 mb-8 sm:mb-10 leading-relaxed">
               {t("ml_model_description")}
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <Card className="bg-card dark:bg-white/10 dark:backdrop-blur-lg dark:border dark:border-white/20 p-8 rounded-2xl hover:shadow-lg transition-shadow">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-primary/10 dark:bg-green-500/20 rounded-lg flex items-center justify-center">
-                    <Brain className="w-6 h-6 text-primary dark:text-green-400" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
+              <Card className="bg-card dark:bg-white/10 dark:backdrop-blur-lg dark:border dark:border-white/20 p-6 sm:p-7 md:p-8 rounded-xl sm:rounded-2xl hover:shadow-lg transition-shadow h-full">
+                <div className="flex items-start gap-4 sm:gap-5">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary/10 dark:bg-green-500/20 rounded-xl flex-shrink-0 flex items-center justify-center">
+                    <Brain className="w-6 h-6 sm:w-7 sm:h-7 text-primary dark:text-green-400" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-foreground dark:text-gray-200 mb-2">{t("advanced_neural_networks")}</h3>
-                    <p className="text-muted-foreground dark:text-gray-400">
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground dark:text-gray-200 mb-2 sm:mb-3">
+                      {t("advanced_neural_networks")}
+                    </h3>
+                    <p className="text-muted-foreground dark:text-gray-400 leading-relaxed">
                       {t("neural_network_description")}
                     </p>
                   </div>
                 </div>
               </Card>
 
-              <Card className="bg-card dark:bg-white/10 dark:backdrop-blur-lg dark:border dark:border-white/20 p-8 rounded-2xl hover:shadow-lg transition-shadow">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-secondary/10 dark:bg-blue-500/20 rounded-lg flex items-center justify-center">
-                    <BarChart3 className="w-6 h-6 text-secondary dark:text-blue-400" />
+              <Card className="bg-card dark:bg-white/10 dark:backdrop-blur-lg dark:border dark:border-white/20 p-6 sm:p-7 md:p-8 rounded-xl sm:rounded-2xl hover:shadow-lg transition-shadow h-full">
+                <div className="flex items-start gap-4 sm:gap-5">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-secondary/10 dark:bg-blue-500/20 rounded-xl flex-shrink-0 flex items-center justify-center">
+                    <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7 text-secondary dark:text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-foreground dark:text-gray-200 mb-2">{t("data_driven_insights")}</h3>
-                    <p className="text-muted-foreground dark:text-gray-400">
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground dark:text-gray-200 mb-2 sm:mb-3">
+                      {t("data_driven_insights")}
+                    </h3>
+                    <p className="text-muted-foreground dark:text-gray-400 leading-relaxed">
                       {t("data_insights_description")}
                     </p>
                   </div>
@@ -121,30 +127,92 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-white/15 dark:to-white/10 dark:backdrop-blur-lg dark:border dark:border-green-500/30 p-6 rounded-xl">
-                <Leaf className="w-8 h-8 text-primary dark:text-green-400 mb-4" />
-                <h4 className="font-bold text-foreground dark:text-gray-200 mb-2">{t("crops_count")}</h4>
-                <p className="text-sm text-muted-foreground dark:text-gray-400">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card className="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-white/10 dark:to-white/5 dark:backdrop-blur-lg dark:border dark:border-green-500/30 p-6 rounded-xl hover:shadow-lg transition-all duration-300 h-full">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary/10 dark:bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
+                  <Leaf className="w-6 h-6 sm:w-7 sm:h-7 text-primary dark:text-green-400" />
+                </div>
+                <h4 className="text-lg sm:text-xl font-bold text-foreground dark:text-gray-200 mb-3">{t("crops_count")}</h4>
+                <p className="text-muted-foreground dark:text-gray-400 leading-relaxed">
                   {t("crops_description")}
                 </p>
               </Card>
 
-              <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 dark:from-white/15 dark:to-white/10 dark:backdrop-blur-lg dark:border dark:border-blue-500/30 p-6 rounded-xl">
-                <TrendingUp className="w-8 h-8 text-secondary dark:text-blue-400 mb-4" />
-                <h4 className="font-bold text-foreground dark:text-gray-200 mb-2">{t("real_time_analysis")}</h4>
-                <p className="text-sm text-muted-foreground dark:text-gray-400">
+              <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 dark:from-white/10 dark:to-white/5 dark:backdrop-blur-lg dark:border dark:border-blue-500/30 p-6 rounded-xl hover:shadow-lg transition-all duration-300 h-full">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-secondary/10 dark:bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                  <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7 text-secondary dark:text-blue-400" />
+                </div>
+                <h4 className="text-lg sm:text-xl font-bold text-foreground dark:text-gray-200 mb-3">{t("real_time_analysis")}</h4>
+                <p className="text-muted-foreground dark:text-gray-400 leading-relaxed">
                   {t("real_time_description")}
                 </p>
               </Card>
 
-              <Card className="bg-gradient-to-br from-accent/5 to-accent/10 dark:from-white/15 dark:to-white/10 dark:backdrop-blur-lg dark:border dark:border-yellow-500/30 p-6 rounded-xl">
-                <Zap className="w-8 h-8 text-accent dark:text-yellow-400 mb-4" />
-                <h4 className="font-bold text-foreground dark:text-gray-200 mb-2">{t("profit_optimization")}</h4>
-                <p className="text-sm text-muted-foreground dark:text-gray-400">
+              <Card className="bg-gradient-to-br from-accent/5 to-accent/10 dark:from-white/10 dark:to-white/5 dark:backdrop-blur-lg dark:border dark:border-yellow-500/30 p-6 rounded-xl hover:shadow-lg transition-all duration-300 h-full">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-accent/10 dark:bg-yellow-500/20 rounded-xl flex items-center justify-center mb-4">
+                  <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-accent dark:text-yellow-400" />
+                </div>
+                <h4 className="text-lg sm:text-xl font-bold text-foreground dark:text-gray-200 mb-3">{t("profit_optimization")}</h4>
+                <p className="text-muted-foreground dark:text-gray-400 leading-relaxed">
                   {t("profit_description")}
                 </p>
               </Card>
+            </div>
+          </div>
+
+          {/* Features Section */}
+          <div className="space-y-8 sm:space-y-12">
+            <div className="text-center px-2 sm:px-0">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-foreground dark:text-white mb-3 sm:mb-4">{t("features")}</h2>
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground dark:text-gray-300 max-w-2xl mx-auto">
+                {t("features_description")}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+              {[
+                {
+                  icon: <Leaf className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary dark:text-green-400" />,
+                  title: t("crop_recommendations"),
+                  description: t("crop_recommendations_desc")
+                },
+                {
+                  icon: <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary dark:text-green-400" />,
+                  title: t("yield_prediction"),
+                  description: t("yield_prediction_desc")
+                },
+                {
+                  icon: <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary dark:text-green-400" />,
+                  title: t("real_time_insights"),
+                  description: t("real_time_insights_desc")
+                },
+                {
+                  icon: <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary dark:text-green-400" />,
+                  title: t("market_analysis"),
+                  description: t("market_analysis_desc")
+                },
+                {
+                  icon: <Brain className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary dark:text-green-400" />,
+                  title: t("ai_powered"),
+                  description: t("ai_powered_desc")
+                },
+                {
+                  icon: <Sprout className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary dark:text-green-400" />,
+                  title: t("sustainable_farming"),
+                  description: t("sustainable_farming_desc")
+                }
+              ].map((feature, index) => (
+                <Card 
+                  key={index} 
+                  className="p-4 sm:p-5 md:p-6 hover:shadow-lg transition-shadow bg-card dark:bg-white/5 dark:border-white/10 h-full"
+                >
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center rounded-lg bg-primary/10 dark:bg-green-500/20 mb-3 sm:mb-4">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground dark:text-white mb-2">{feature.title}</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground dark:text-gray-400">{feature.description}</p>
+                </Card>
+              ))}
             </div>
           </div>
 
