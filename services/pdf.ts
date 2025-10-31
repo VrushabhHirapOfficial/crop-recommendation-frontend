@@ -44,22 +44,75 @@ const getApiUrl = () => {
 
 export const downloadPDFReport = async (reportData: PDFReportData): Promise<{ success: boolean; error?: string }> => {
   try {
-    // Use local API endpoint (no base URL needed for local routes)
-    const response = await axios({
-      method: 'POST',
-      url: '/api/generate-report',
-      data: reportData,
-      responseType: 'blob',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    // First try to use the API route
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: '/api/generate-report',
+        data: reportData,
+        responseType: 'blob',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout: 10000, // 10 second timeout
+      });
 
-    // Create a blob from the response
-    const blob = new Blob([response.data], { type: 'text/html' });
+      // If we get here, the API call was successful
+      const blob = new Blob([response.data], { type: 'text/html' });
+      const url = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `crop-report-${new Date().toISOString().split('T')[0]}.html`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      return { success: true };
+    } catch (apiError: any) {
+      console.warn('API route failed, falling back to client-side generation');
+      // Fall back to client-side generation
+      return generateClientSideReport(reportData);
+    }
+  } catch (error: any) {
+    console.error('Error generating report:', error);
+    
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      return {
+        success: false,
+        error: 'Server error while generating report. Please try again later.'
+      };
+    } else if (error.request) {
+      // The request was made but no response was received
+      return {
+        success: false,
+        error: 'No response from server. Please check your connection and try again.'
+      };
+    } else if (error.code === 'ECONNABORTED') {
+      return {
+        success: false,
+        error: 'Request timed out. The server might be busy. Please try again.'
+      };
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      return {
+        success: false,
+        error: 'Failed to generate report. Please try again later.'
+      };
+    }
+  }
+};
+
+// Client-side report generation
+const generateClientSideReport = (reportData: PDFReportData): { success: boolean; error?: string } => {
+  try {
+    const htmlContent = generateReportHTML(reportData);
+    const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = window.URL.createObjectURL(blob);
     
-    // Create a temporary link and trigger download
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', `crop-report-${new Date().toISOString().split('T')[0]}.html`);
@@ -67,32 +120,13 @@ export const downloadPDFReport = async (reportData: PDFReportData): Promise<{ su
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
-
+    
     return { success: true };
-
   } catch (error) {
-    console.error('Error downloading report:', error);
-
-    // If API fails, provide a fallback message or mock implementation
-    if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError;
-
-      if (axiosError.response?.status === 500) {
-        return {
-          success: false,
-          error: 'Server error while generating report. Please try again later.'
-        };
-      } else if (axiosError.code === 'ECONNABORTED') {
-        return {
-          success: false,
-          error: 'Request timed out. The server might be busy. Please try again.'
-        };
-      }
-    }
-
+    console.error('Error in client-side report generation:', error);
     return {
       success: false,
-      error: 'Unable to generate report. Please check your connection and try again.'
+      error: 'Failed to generate report. Please try again later.'
     };
   }
 };
