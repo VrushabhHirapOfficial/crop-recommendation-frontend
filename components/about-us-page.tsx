@@ -29,13 +29,13 @@ const teamMembers = [
   {
     id: 3,
     name: "Harshvardhan Bavle",
-    role: "Team Member",
-    description: "Contributing to the development and success of Indra Dhanu with dedication and expertise.",
+    role: "Backend Developer",
+    description: "Developing and maintaining robust backend systems, focusing on API development, database management, and ensuring seamless data integration.",
     github: "",
-    linkedin: "https://www.linkedin.com/in/harshwardhan-bavale-86007032b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    linkedin: "https://www.linkedin.com/in/harshwardhan-bavale-86007032b",
     avatar: "/harshvardhan.jpg",
     avatarType: "image",
-    skills: ["Content Writing", "Data Collection", "Presentation & Demo", "UI/UX Improvements"]
+    skills: ["API Development", "Database Management", "Python", "Data Integration"]
   },
   {
     id: 4,

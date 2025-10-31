@@ -52,15 +52,22 @@ export const downloadPDFReport = async (reportData: PDFReportData): Promise<{ su
       responseType: 'blob',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'text/html',
       },
-      timeout: 30000,
     });
 
-    // Handle HTML response - this is now the standard response
-    console.log('Received HTML response');
+    // Create a blob from the response
     const blob = new Blob([response.data], { type: 'text/html' });
-    await downloadBlob(blob, 'html');
+    const url = window.URL.createObjectURL(blob);
+    
+    // Create a temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `crop-report-${new Date().toISOString().split('T')[0]}.html`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
     return { success: true };
 
   } catch (error) {
