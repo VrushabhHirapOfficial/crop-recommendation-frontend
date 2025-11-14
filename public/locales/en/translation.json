@@ -73,9 +73,9 @@
   "grow_smarter_with": "Grow Smarter with",
   "hero_description": "Our advanced ML model analyzes your soil and climate conditions to recommend the perfect crops for maximum yield and profitability.",
   "get_started": "Get Started",
-  "accuracy_rate": "Accuracy Rate",
-  "farmers_helped": "Farmers Helped",
-  "revenue_generated": "Revenue Generated",
+  "accuracy_rate_future": "Accuracy Rate",
+  "farmers_we_will_help": "Farmers We Can Help",
+  "revenue_potential_future": "Revenue Potential",
 
   "our_trained_ml_model": "Our Trained ML Model",
   "ml_model_description": "Built with cutting-edge machine learning technology and trained on years of agricultural data",

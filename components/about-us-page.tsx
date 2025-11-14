@@ -28,25 +28,25 @@ const teamMembers = [
   },
   {
     id: 3,
-    name: "Harshvardhan Bavle",
-    role: "Backend Developer",
+    name: "Harshwardhan Bavale",
+    role: "ML Model Architecture",
     description: "Developing and maintaining robust backend systems, focusing on API development, database management, and ensuring seamless data integration.",
     github: "",
     linkedin: "https://www.linkedin.com/in/harshwardhan-bavale-86007032b",
     avatar: "/harshvardhan.jpg",
     avatarType: "image",
-    skills: ["API Development", "Database Management", "Python", "Data Integration"]
+    skills: ["API Development", "Data Science", "Python", "ML Architecture"]
   },
   {
     id: 4,
     name: "Hrishikesh Bhande",
-    role: "Team Member",
+    role: "Backend Developer",
     description: "Contributing to the development and success of Indra Dhanu with dedication and technical expertise.",
     github: "https://github.com/HrishikeshBhande06",
     linkedin: "http://www.linkedin.com/in/hrishikesh-bhande-b26407252",
     avatar: "/hrishi.jpg",
     avatarType: "image",
-    skills: ["Testing", "Documentation", "Market Research", "Social Media Content"]
+    skills: ["Flask", "API", "node.js", "Researcher"]
   }
 ]
 

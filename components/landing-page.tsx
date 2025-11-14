@@ -65,15 +65,15 @@ export default function LandingPage({ onNavigate }: { onNavigate: (tab: string) 
             <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 mb-12 sm:mb-20 px-2 sm:px-0">
               <div className="text-center p-2 sm:p-3 bg-white/5 dark:bg-white/5 rounded-xl backdrop-blur-sm">
                 <div className="text-xl sm:text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-1 sm:mb-2">98%</div>
-                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("accuracy_rate")}</p>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("accuracy_rate_future")}</p>
               </div>
               <div className="text-center p-2 sm:p-3 bg-white/5 dark:bg-white/5 rounded-xl backdrop-blur-sm">
                 <div className="text-xl sm:text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-1 sm:mb-2">50K+</div>
-                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("farmers_helped")}</p>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("farmers_we_will_help")}</p>
               </div>
               <div className="text-center p-2 sm:p-3 bg-white/5 dark:bg-white/5 rounded-xl backdrop-blur-sm">
                 <div className="text-xl sm:text-3xl md:text-4xl font-bold text-primary dark:text-green-400 mb-1 sm:mb-2">₹2.5Cr</div>
-                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("revenue_generated")}</p>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground dark:text-gray-400">{t("revenue_potential_future")}</p>
               </div>
             </div>
           </div>
